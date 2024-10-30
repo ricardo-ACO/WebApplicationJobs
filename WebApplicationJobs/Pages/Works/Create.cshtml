@@ -1,26 +1,12 @@
 ﻿@page
-@model WebApplicationJobs.Pages.Users.CreateModel
+@model WebApplicationJobs.Pages.Works.IndexModel
 @{
-    <h2>Adicionar User</h2>
+    <h2>Adicionar Profissão</h2>
 
     <form method="post">
-        <label>Nome:</label>
-        <input type="text" asp-for="User.Name" />
+        <label>Nome da Profissão:</label>
+         <input type="text" asp-for="Work.Title" />
 
-        <label>Email:</label>
-        <input type="email" asp-for="User.Email" />
-
-        <label>Profissões:</label>
-        <div>
-            @foreach (var work in Model.Works)
-            {
-                <div>
-                    <input type="checkbox" name="SelectedWorkIds" value="@work.Id" />
-                    <label>@work.Title</label>
-                </div>
-            }
-        </div>
-
-        <button class="btn btn-primary" type="submit">Adicionar</button>
+        <button type="submit">Adicionar</button>
     </form>
 }

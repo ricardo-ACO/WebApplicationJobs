@@ -26,7 +26,7 @@ namespace WebApplicationJobs.Pages.Users
 
         public async Task<IActionResult> OnGetAsync()
         {
-            // Carrega as profissões
+            
             Works = await _workRepository.GetWorksAsync();
             return Page();
         }
@@ -35,10 +35,10 @@ namespace WebApplicationJobs.Pages.Users
         {
             try
             {
-                // Adiciona o usuário
+                
                 await _userRepository.AddUserAsync(User);
 
-                // Adiciona todos os relacionamentos na tabela User_Work
+                
                 foreach (var workId in SelectedWorkIds)
                 {
                     await _userRepository.AddUserWorkAsync(User.Id, workId);
@@ -49,7 +49,7 @@ namespace WebApplicationJobs.Pages.Users
             catch (Exception ex)
             {
                 ModelState.AddModelError(string.Empty, $"Erro ao gravar: {ex.Message}");
-                Works = await _workRepository.GetWorksAsync(); // Recarrega as profissões
+                Works = await _workRepository.GetWorksAsync();
                 return Page();
             }
         }

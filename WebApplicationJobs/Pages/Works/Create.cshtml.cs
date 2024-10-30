@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
 using WebApplicationJobs.Models;
@@ -13,28 +14,37 @@ namespace WebApplicationJobs.Pages.Works
             _configuration = configuration;
         }
 
-        public List<Work> Works { get; set; } = new List<Work>();
+        [BindProperty]
+        public Work Work { get; set; } = new Work();
 
-        public async Task OnGetAsync()
+        public IActionResult OnGet()
         {
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+           
+
             var connectionString = _configuration.GetConnectionString("DefaultConnection");
 
             using (var connection = new SqlConnection(connectionString))
             {
                 await connection.OpenAsync();
 
-                var command = new SqlCommand("SELECT Id, Title FROM Works", connection);
+                var query = "INSERT INTO Works (Title) VALUES (@Title)";
+                using var command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@Title", Work.Title);
 
-                using (var reader = await command.ExecuteReaderAsync())
+                try
                 {
-                    while (await reader.ReadAsync())
-                    {
-                        Works.Add(new Work
-                        {
-                            Id = reader.GetInt32(0),
-                            Title = reader.GetString(1)
-                        });
-                    }
+                    await command.ExecuteNonQueryAsync();
+                    return RedirectToPage("Index");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, $"Erro ao gravar: {ex.Message}");
+                    return Page();
                 }
             }
         }
