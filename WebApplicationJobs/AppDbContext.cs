@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebApplicationJobs.Models;
 
-
+//Entity Framework - first approach
 namespace WebApplicationJobs
 {
-    public class AppDbContext: DbContext
+    public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
@@ -27,9 +27,9 @@ namespace WebApplicationJobs
 
 
             modelBuilder.Entity<User>()
-          .HasMany(u => u.UserWorks)
-          .WithOne(uw => uw.User)
-          .HasForeignKey(uw => uw.UserId);
+                .HasMany(u => u.UserWorks)
+                .WithOne(uw => uw.User)
+                .HasForeignKey(uw => uw.UserId);
 
             modelBuilder.Entity<Work>()
                 .HasMany(w => w.UserWorks)
