@@ -1,0 +1,32 @@
+﻿@page
+@model WebApplicationJobs.Pages.Users.IndexModel
+@{
+    <h2>Lista de Users</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Profissões</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td>@user.Name</td>
+                    <td>@user.Email</td>
+                    <td>
+                        @foreach (var userWork in user.UserWorks)
+                        {
+                            <span>@userWork.Work.Title</span>
+                            <br />
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a class="btn btn-primary" asp-page="./Create">Adicionar User</a> <!-- Botão para adicionar um novo usuário -->
+}

@@ -1,0 +1,22 @@
+﻿@page
+@model WebApplicationJobs.Pages.Works.IndexWorkModel
+@{
+    <h2>Lista de Profissões</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Profissão</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var work in Model.Works)
+            {
+                <tr>
+                    <td>@work.Title</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a class="btn btn-primary" asp-page="./Create">Adicionar Profissão</a> 
+}
